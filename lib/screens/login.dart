@@ -53,8 +53,8 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                  hintText: 'john.doe@gmail.com',
-                  labelText: 'Correo electrónico',
+                  hintText: 'Introduce tu usuario (correo electronico)',
+                  labelText: 'Usuario',
                   prefixIcon: Icons.alternate_email_rounded),
               onChanged: (value) => loginForm.email = value,
               validator: (value) {
@@ -64,7 +64,7 @@ class _LoginForm extends StatelessWidget {
 
                 return regExp.hasMatch(value ?? '')
                     ? null
-                    : 'El valor ingresado no luce como un correo';
+                    : 'El valor introducido no es un correo electronico';
               },
             ),
             SizedBox(height: 30),
@@ -74,13 +74,13 @@ class _LoginForm extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
                   hintText: '*****',
-                  labelText: 'Contraseña',
+                  labelText: 'Contraseña del usuario',
                   prefixIcon: Icons.lock_outline),
               onChanged: (value) => loginForm.password = value,
               validator: (value) {
                 return (value != null && value.length >= 6)
                     ? null
-                    : 'La contraseña debe de ser de 6 caracteres';
+                    : 'La contraseña debe de ser de al menos 6 caracteres';
               },
             ),
             SizedBox(height: 30),
@@ -107,7 +107,6 @@ class _LoginForm extends StatelessWidget {
 
                         await Future.delayed(Duration(seconds: 2));
 
-                        // TODO: validar si el login es correcto
                         loginForm.isLoading = false;
 
                         Navigator.pushReplacementNamed(context, 'home');

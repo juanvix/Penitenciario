@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Gestion penitenciaria',
       initialRoute: 'login',
       routes: {
-        'login': (context) => LoginScreen(),
+        'login': (context) => const LoginScreen(),
         'home': (context) => const HomeScreen()
       },
     );
