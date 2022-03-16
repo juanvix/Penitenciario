@@ -9,11 +9,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gestion penitenciaria',
-      initialRoute: 'login',
+      initialRoute: 'anadir_internos',
       routes: {
         'login': (context) => const LoginScreen(),
-        'home': (context) => const HomeScreen()
+        'home': (context) => const HomeScreen(),
+        'anadir_internos': (context) => const AnadirInternosScreen(),
       },
+      theme: ThemeData.light().copyWith(
+          scaffoldBackgroundColor: Colors.grey[300],
+          appBarTheme: AppBarTheme(elevation: 0, color: Colors.green),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: Colors.green, elevation: 0)),
     );
   }
 }

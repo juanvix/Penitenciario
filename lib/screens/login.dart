@@ -88,7 +88,7 @@ class _LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               disabledColor: Colors.grey,
               elevation: 0,
-              color: Colors.deepPurple,
+              color: Color.fromARGB(169, 58, 183, 75),
               child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
