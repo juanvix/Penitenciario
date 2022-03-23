@@ -1,47 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:penitenciario/models/interno.dart';
 
 class InternoCard extends StatelessWidget {
+  final Interno interno;
+  const InternoCard({Key? key, required this.interno}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    String nameandsurname = interno.name + " " + interno.surname;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: SizedBox(
         width: double.infinity,
         height: 400,
         child: Stack(
-          children: [_BackgroundImage(), _nombre()],
+          alignment: Alignment.bottomCenter,
+          children: [
+            _BackgroundImage(interno.picture),
+            _Datos(
+              niss: interno.niss!,
+              nameSurname: nameandsurname,
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _nombre extends StatelessWidget {
+class _Datos extends StatelessWidget {
+  final String niss;
+  final String nameSurname;
+
+  const _Datos({required this.niss, required this.nameSurname});
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 0.5,
+        horizontal: 5,
+      ),
       width: double.infinity,
-      height: 20,
-      color: Colors.red,
+      decoration: _builBoxDecoration(),
+      height: 50,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            niss,
+            style: TextStyle(
+                fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            nameSurname,
+            style: TextStyle(
+                fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
+      ),
     );
   }
+
+  BoxDecoration _builBoxDecoration() => BoxDecoration(
+      color: Colors.green[300],
+      borderRadius: BorderRadius.all(Radius.circular(5)));
 }
 
 class _BackgroundImage extends StatelessWidget {
-  const _BackgroundImage({
-    Key? key,
-  }) : super(key: key);
+  final String? url;
+
+  const _BackgroundImage(this.url);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 400,
-      decoration: _boxDecoration(),
-      child: const FadeInImage(
-          image: AssetImage('assets/internos_images'),
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          fit: BoxFit.cover),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: Container(
+        width: double.infinity,
+        height: 400,
+        decoration: _boxDecoration(),
+        child: FadeInImage(
+            image: NetworkImage(url!),
+            placeholder: AssetImage('assets/internos_images/jar-loading.gif'),
+            fit: BoxFit.cover),
+      ),
     );
   }
 
