@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:penitenciario/screens/screens.dart';
 
-import 'package:provider/provider.dart';
-import 'package:penitenciario/providers/interno_form_provider.dart';
+import 'package:penitenciario/providers/providers.dart';
 import 'package:penitenciario/ui/input_decorations.dart';
 import 'package:penitenciario/services/services.dart';
 import 'package:penitenciario/widgets/widgets.dart';

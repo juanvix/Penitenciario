@@ -14,13 +14,13 @@ class Interno {
   Interno(
       {required this.name,
       required this.observaciones,
-      required this.picture,
+      this.picture,
       required this.surname,
       required this.niss});
 
   String name;
   String observaciones;
-  String picture;
+  String? picture;
   String surname;
   String? niss;
 

@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:penitenciario/widgets/widgets.dart';
 import 'package:penitenciario/models/models.dart';
-import '../services/services.dart';
+import 'package:penitenciario/services/services.dart';
+import 'package:penitenciario/screens/screens.dart';
 
 class AnadirInternosScreen extends StatelessWidget {
   const AnadirInternosScreen({Key? key}) : super(key: key);
@@ -11,6 +12,9 @@ class AnadirInternosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final internosService = Provider.of<InternosService>(context);
+
+    if (internosService.isLoading) return LoadingScreen();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Internos'),
@@ -20,14 +24,20 @@ class AnadirInternosScreen extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) => GestureDetector(
           onTap: () {
             internosService.selectedInterno =
-                InternosService.internos[index].copy();
+                internosService.internos[index].copy();
             Navigator.pushNamed(context, 'interno');
           },
-          child: InternoCard(),
+          child: InternoCard(
+            interno: internosService.internos[index],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          internosService.selectedInterno =
+              new Interno(name: '', observaciones: '', surname: '', niss: '');
+          Navigator.pushNamed(context, 'interno');
+        },
         child: const Icon(Icons.person_add),
       ),
     );

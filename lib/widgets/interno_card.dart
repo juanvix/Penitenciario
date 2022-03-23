@@ -48,14 +48,14 @@ class _Datos extends StatelessWidget {
         children: [
           Text(
             niss,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
             nameSurname,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -67,7 +67,7 @@ class _Datos extends StatelessWidget {
 
   BoxDecoration _builBoxDecoration() => BoxDecoration(
       color: Colors.green[300],
-      borderRadius: BorderRadius.all(Radius.circular(5)));
+      borderRadius: const BorderRadius.all(Radius.circular(5)));
 }
 
 class _BackgroundImage extends StatelessWidget {
@@ -83,10 +83,16 @@ class _BackgroundImage extends StatelessWidget {
         width: double.infinity,
         height: 400,
         decoration: _boxDecoration(),
-        child: FadeInImage(
-            image: NetworkImage(url!),
-            placeholder: AssetImage('assets/internos_images/jar-loading.gif'),
-            fit: BoxFit.cover),
+        child: url == null
+            ? Image(
+                image: AssetImage('assets/internos_images/no-image.png'),
+                fit: BoxFit.cover,
+              )
+            : FadeInImage(
+                image: NetworkImage(url!),
+                placeholder:
+                    const AssetImage('assets/internos_images/jar-loading.gif'),
+                fit: BoxFit.cover),
       ),
     );
   }

@@ -62,24 +62,23 @@ class InternosService extends ChangeNotifier {
     final resp = await http.put(url, body: interno.toJson());
     final decodedData = resp.body;
 
-    //TODO: Actualizar el listado de productos
     final index =
         this.internos.indexWhere((element) => element.niss == interno.niss);
     this.internos[index] = interno;
 
-    return interno.niss;
+    return interno.niss!;
   }
 
   Future<String> createInterno(Interno interno) async {
     final url = Uri.https(_baseUrl, 'internos.json');
     final resp = await http.post(url, body: interno.toJson());
-    final decodedData = json.decode(resp.body);
+    //final decodedData = json.decode(resp.body);
 
-    interno.niss = decodedData['niss'];
+    //interno.niss = decodedData['niss'];
 
     this.internos.add(interno);
 
-    return interno.niss;
+    return interno.niss!;
   }
 
   void updateSelectedInternoImage(String path) {
@@ -96,7 +95,7 @@ class InternosService extends ChangeNotifier {
     notifyListeners();
 
     final url = Uri.parse(
-        'https://api.cloudinary.com/v1_1/dx0pryfzn/image/upload?upload_preset=autwc6pa');
+        'https://api.cloudinary.com/v1_1/dkk5i0sua/image/upload?upload_preset=penitenciario');
 
     final imageUploadRequest = http.MultipartRequest('POST', url);
 
