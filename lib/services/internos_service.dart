@@ -16,7 +16,7 @@ class InternosService extends ChangeNotifier {
   bool isLoading = true;
   bool isSaving = false;
 
-  InternosServices() {
+  InternosService() {
     this.loadInternos();
   }
 
@@ -30,7 +30,7 @@ class InternosService extends ChangeNotifier {
     final Map<String, dynamic> internosMap = json.decode(resp.body);
 
     internosMap.forEach((key, value) {
-      final tempInterno = Interno.fromJson(value);
+      final tempInterno = Interno.fromMap(value);
       tempInterno.niss = key;
       this.internos.add(tempInterno);
     });
