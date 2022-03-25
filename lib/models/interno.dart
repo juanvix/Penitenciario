@@ -4,12 +4,13 @@
 
 import 'dart:convert';
 
+/*
 Map<String, Interno> internoFromJson(String str) => Map.from(json.decode(str))
     .map((k, v) => MapEntry<String, Interno>(k, Interno.fromJson(v)));
 
 String internoToJson(Map<String, Interno> data) => json.encode(
     Map.from(data).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())));
-
+*/
 class Interno {
   Interno(
       {required this.name,
@@ -24,14 +25,18 @@ class Interno {
   String surname;
   String? niss;
 
-  factory Interno.fromJson(Map<String, dynamic> json) => Interno(
+  factory Interno.fromJson(String str) => Interno.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Interno.fromMap(Map<String, dynamic> json) => Interno(
       name: json["name"],
       observaciones: json["observaciones"],
       picture: json["picture"],
       surname: json["surname"],
       niss: json["niss"]);
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "name": name,
         "observaciones": observaciones,
         "picture": picture,

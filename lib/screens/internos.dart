@@ -1,43 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:penitenciario/screens/screens.dart';
-
 import 'package:penitenciario/providers/providers.dart';
-import 'package:penitenciario/ui/input_decorations.dart';
-import 'package:penitenciario/services/services.dart';
 import 'package:penitenciario/widgets/widgets.dart';
+import 'package:penitenciario/services/services.dart';
+import 'package:penitenciario/ui/input_decorations.dart';
 
 class InternosScreen extends StatelessWidget {
   const InternosScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final internoService = Provider.of<InternosService>(context);
-
-    if (internoService.isLoading) return LoadingScreen();
+    final internosService = Provider.of<InternosService>(context);
 
     return ChangeNotifierProvider(
-      create: (_) => InternoFormProvider(internoService.selectedInterno),
-      child: _InternoScreenBody(internoService: internoService),
+      create: (_) => InternoFormProvider(internosService.selectedInterno),
+      child: _InternosScreenBody(internosService: internosService),
     );
   }
 }
 
-class _InternoScreenBody extends StatelessWidget {
-  const _InternoScreenBody({
+class _InternosScreenBody extends StatelessWidget {
+  const _InternosScreenBody({
     Key? key,
-    required this.internoService,
+    required this.internosService,
   }) : super(key: key);
 
-  final InternosService internoService;
-
+  final InternosService internosService;
   @override
   Widget build(BuildContext context) {
     final internoForm = Provider.of<InternoFormProvider>(context);
-
     return Scaffold(
       body: SingleChildScrollView(
         // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -45,7 +37,7 @@ class _InternoScreenBody extends StatelessWidget {
           children: [
             Stack(
               children: [
-                InternoImage(url: internoService.selectedInterno.picture),
+                InternoImage(url: internosService.selectedInterno.picture),
                 Positioned(
                     top: 60,
                     left: 20,
@@ -60,7 +52,8 @@ class _InternoScreenBody extends StatelessWidget {
                     child: IconButton(
                       onPressed: () async {
                         final picker = new ImagePicker();
-                        final PickedFile? pickedFile = await picker.getImage(
+                        final XFile? pickedFile = await picker.pickImage(
+
                             // source: ImageSource.gallery,
                             source: ImageSource.camera,
                             imageQuality: 100);
@@ -70,34 +63,34 @@ class _InternoScreenBody extends StatelessWidget {
                           return;
                         }
 
-                        internoService
+                        internosService
                             .updateSelectedInternoImage(pickedFile.path);
                       },
-                      icon: Icon(Icons.camera_alt_outlined,
+                      icon: const Icon(Icons.camera_alt_outlined,
                           size: 40, color: Colors.white),
                     ))
               ],
             ),
             _InternoForm(),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        child: internoService.isSaving
+        child: internosService.isSaving
             ? const CircularProgressIndicator(color: Colors.white)
             : const Icon(Icons.save_outlined),
-        onPressed: internoService.isSaving
+        onPressed: internosService.isSaving
             ? null
             : () async {
                 if (!internoForm.isValidForm()) return;
 
-                final String? imageUrl = await internoService.uploadImage();
+                final String? imageUrl = await internosService.uploadImage();
 
                 if (imageUrl != null) internoForm.interno.picture = imageUrl;
 
-                await internoService.saveOrCreateInterno(internoForm.interno);
+                await internosService.saveOrCreateInterno(internoForm.interno);
               },
       ),
     );
@@ -111,9 +104,9 @@ class _InternoForm extends StatelessWidget {
     final interno = internoForm.interno;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         width: double.infinity,
         decoration: _buildBoxDecoration(),
         child: Form(
@@ -121,17 +114,19 @@ class _InternoForm extends StatelessWidget {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
                 initialValue: interno.niss,
                 onChanged: (value) => interno.niss = value,
                 validator: (value) {
-                  if (value == null || value.length < 1)
+                  if (value == null || value.length < 1) {
                     return 'El niss es obligatorio';
+                  }
                 },
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'Niss del interno', labelText: 'Niss:'),
               ),
+              const SizedBox(height: 30),
               TextFormField(
                 initialValue: interno.name,
                 onChanged: (value) => interno.name = value,
@@ -142,17 +137,18 @@ class _InternoForm extends StatelessWidget {
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'Nombre del interno', labelText: 'Nombre:'),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               TextFormField(
                 initialValue: interno.surname,
                 onChanged: (value) => interno.surname = value,
                 validator: (value) {
                   if (value == null || value.length < 1)
-                    return 'El apellido es obligatorio';
+                    return 'Los apellidos son obligatorios';
                 },
                 decoration: InputDecorations.authInputDecoration(
-                    hintText: 'Apellido del interno', labelText: 'Apellido:'),
+                    hintText: 'Apellidos del interno', labelText: 'Apellidos:'),
               ),
+              const SizedBox(height: 30),
               TextFormField(
                 initialValue: interno.observaciones,
                 onChanged: (value) => interno.observaciones = value,
@@ -164,7 +160,7 @@ class _InternoForm extends StatelessWidget {
                     hintText: 'Observaciones del interno',
                     labelText: 'Observaciones:'),
               ),
-              SizedBox(height: 30)
+              const SizedBox(height: 30)
             ],
           ),
         ),
@@ -174,13 +170,13 @@ class _InternoForm extends StatelessWidget {
 
   BoxDecoration _buildBoxDecoration() => BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25)),
+          borderRadius: const BorderRadius.only(
+              bottomRight: const Radius.circular(25),
+              bottomLeft: const Radius.circular(25)),
           boxShadow: [
             BoxShadow(
                 color: Colors.black.withOpacity(0.05),
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
                 blurRadius: 5)
           ]);
 }

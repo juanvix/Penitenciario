@@ -84,7 +84,7 @@ class _BackgroundImage extends StatelessWidget {
         height: 400,
         decoration: _boxDecoration(),
         child: url == null
-            ? Image(
+            ? const Image(
                 image: AssetImage('assets/internos_images/no-image.png'),
                 fit: BoxFit.cover,
               )

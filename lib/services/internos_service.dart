@@ -24,7 +24,7 @@ class InternosService extends ChangeNotifier {
     this.isLoading = true;
     notifyListeners();
 
-    final url = Uri.https(_baseUrl, 'internos.json');
+    final url = Uri.https(_baseUrl, '/interno.json');
     final resp = await http.get(url);
 
     final Map<String, dynamic> internosMap = json.decode(resp.body);
@@ -58,7 +58,7 @@ class InternosService extends ChangeNotifier {
   }
 
   Future<String> updateInterno(Interno interno) async {
-    final url = Uri.https(_baseUrl, 'internos/${interno.niss}.json');
+    final url = Uri.https(_baseUrl, '/interno/${interno.niss}.json');
     final resp = await http.put(url, body: interno.toJson());
     final decodedData = resp.body;
 
@@ -70,7 +70,7 @@ class InternosService extends ChangeNotifier {
   }
 
   Future<String> createInterno(Interno interno) async {
-    final url = Uri.https(_baseUrl, 'internos.json');
+    final url = Uri.https(_baseUrl, '/interno.json');
     final resp = await http.post(url, body: interno.toJson());
     //final decodedData = json.decode(resp.body);
 
