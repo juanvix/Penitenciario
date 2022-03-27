@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:penitenciario/screens/screens.dart';
 import 'package:penitenciario/services/services.dart';
 
-void main() => runApp(AppState());
+void main() => runApp(const AppState());
 
 class AppState extends StatelessWidget {
+  const AppState({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => InternosService())],
-      child: MyApp(),
+      child: const MyApp(),
     );
   }
 }
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'login': (context) => const LoginScreen(),
-        'home': (context) => const HomeScreen(),
+        'home': (context) => HomeScreen(),
         'internos': (context) => const InternosScreen(),
       },
       theme: ThemeData.light().copyWith(

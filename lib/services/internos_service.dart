@@ -1,6 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
+// ignore_for_file: unnecessary_this, unused_local_variable, avoid_print, unnecessary_new
 
+import 'dart:convert';
+
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/interno.dart';
 import 'package:http/http.dart' as http;
@@ -12,12 +15,25 @@ class InternosService extends ChangeNotifier {
   late Interno selectedInterno;
 
   File? newPictureFile;
-
+  final _dio = new Dio();
   bool isLoading = true;
   bool isSaving = false;
 
   InternosService() {
     this.loadInternos();
+  }
+
+  Future getInternoByNiss(String niss) async {
+    Interno interno = new Interno();
+
+    final url =
+        'https://penitenciario-8005d-default-rtdb.europe-west1.firebasedatabase.app/interno/$niss/surname';
+
+    final resp = await _dio.get(url);
+
+    final List<dynamic> internoList = resp.data;
+
+    return internoList.map((obj) => Interno.fromJson(obj)).toList();
   }
 
   Future<List<Interno>> loadInternos() async {

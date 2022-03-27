@@ -2,30 +2,21 @@
 //
 //     final interno = internoFromJson(jsonString);
 
+// ignore_for_file: unnecessary_this
+
 import 'dart:convert';
 
-/*
-Map<String, Interno> internoFromJson(String str) => Map.from(json.decode(str))
-    .map((k, v) => MapEntry<String, Interno>(k, Interno.fromJson(v)));
-
-String internoToJson(Map<String, Interno> data) => json.encode(
-    Map.from(data).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())));
-*/
 class Interno {
-  Interno(
-      {required this.name,
-      required this.observaciones,
-      this.picture,
-      required this.surname,
-      required this.niss});
-
-  String name;
-  String observaciones;
+  String? name;
+  String? observaciones;
   String? picture;
-  String surname;
+  String? surname;
   String? niss;
 
-  factory Interno.fromJson(String str) => Interno.fromMap(json.decode(str));
+  Interno(
+      {this.name, this.observaciones, this.picture, this.surname, this.niss});
+
+  //factory Interno.fromJson(String str) => Interno.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -43,6 +34,17 @@ class Interno {
         "surname": surname,
         "niss": niss
       };
+
+  static Interno fromJson(Map json) {
+    return Interno(
+      name: json['name'],
+      observaciones: json['observaciones'],
+      picture: json['picture'],
+      surname: json['surname'],
+      niss: json['niss'],
+    );
+  }
+
   Interno copy() => Interno(
       name: this.name,
       picture: this.picture,

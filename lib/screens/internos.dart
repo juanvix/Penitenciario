@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -119,9 +121,10 @@ class _InternoForm extends StatelessWidget {
                 initialValue: interno.niss,
                 onChanged: (value) => interno.niss = value,
                 validator: (value) {
-                  if (value == null || value.length < 1) {
+                  if (value == null || value.isEmpty) {
                     return 'El niss es obligatorio';
                   }
+                  return null;
                 },
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'Niss del interno', labelText: 'Niss:'),
@@ -131,8 +134,10 @@ class _InternoForm extends StatelessWidget {
                 initialValue: interno.name,
                 onChanged: (value) => interno.name = value,
                 validator: (value) {
-                  if (value == null || value.length < 1)
+                  if (value == null || value.isEmpty) {
                     return 'El nombre es obligatorio';
+                  }
+                  return null;
                 },
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'Nombre del interno', labelText: 'Nombre:'),
@@ -142,8 +147,10 @@ class _InternoForm extends StatelessWidget {
                 initialValue: interno.surname,
                 onChanged: (value) => interno.surname = value,
                 validator: (value) {
-                  if (value == null || value.length < 1)
+                  if (value == null || value.isEmpty) {
                     return 'Los apellidos son obligatorios';
+                  }
+                  return null;
                 },
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'Apellidos del interno', labelText: 'Apellidos:'),
@@ -153,8 +160,10 @@ class _InternoForm extends StatelessWidget {
                 initialValue: interno.observaciones,
                 onChanged: (value) => interno.observaciones = value,
                 validator: (value) {
-                  if (value == null || value.length < 1)
+                  if (value == null || value.isEmpty) {
                     return 'Observaciones es obligatorio';
+                  }
+                  return null;
                 },
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'Observaciones del interno',
@@ -171,8 +180,8 @@ class _InternoForm extends StatelessWidget {
   BoxDecoration _buildBoxDecoration() => BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.only(
-              bottomRight: const Radius.circular(25),
-              bottomLeft: const Radius.circular(25)),
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
           boxShadow: [
             BoxShadow(
                 color: Colors.black.withOpacity(0.05),
