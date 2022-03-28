@@ -26,11 +26,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gestion penitenciaria',
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: {
         'login': (context) => const LoginScreen(),
         'home': (context) => HomeScreen(),
         'internos': (context) => const InternosScreen(),
+        'register': (context) => const RegisterScreen(),
       },
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey[300],

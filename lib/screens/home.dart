@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, unnecessary_this
+// ignore_for_file: unnecessary_new, unnecessary_this, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:penitenciario/screens/screens.dart';
@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                     delegate: SearchInterno("Buscar", this.history),
                   );
                 },
-                icon: Icon(Icons.search))
+                icon: const Icon(Icons.search))
           ],
         ),
         body: ListView.builder(
@@ -57,34 +57,11 @@ class HomeScreen extends StatelessWidget {
 
 class SearchInterno extends SearchDelegate {
   String? nissa;
+
   final String searchFieldLabel;
   final List<Interno> history;
+
   SearchInterno(this.searchFieldLabel, this.history);
-
-  @override
-  Widget buildResults(BuildContext context) {
-    if (query.trim().length == 0) {
-      return Text('No hay valor en la busqueda');
-    }
-
-    final internoService = new InternosService();
-    return FutureBuilder(
-      future: internoService.getInternoByNiss(query),
-      builder: (_, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) {
-          return ListTile(title: Text('No hay nada con ese término'));
-        }
-
-        if (snapshot.hasData) {
-          // crear la lista
-          return _showInternos(snapshot.data);
-        } else {
-          // Loading
-          return Center(child: CircularProgressIndicator(strokeWidth: 4));
-        }
-      },
-    );
-  }
 
   Widget _showInternos(List<Interno> internos) {
     return ListView.builder(
@@ -119,6 +96,38 @@ class SearchInterno extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return _showInternos(this.history);
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(query),
+          onTap: () {},
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    if (query.isEmpty) {
+      return const Text('No hay valor en la busqueda');
+    }
+
+    final internoService = new InternosService();
+    return FutureBuilder(
+      future: internoService.getInternoByNiss(query),
+      builder: (_, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) {
+          return const ListTile(title: Text('No hay nada con ese término'));
+        }
+
+        if (snapshot.hasData) {
+          // crear la lista
+          return _showInternos(snapshot.data);
+        } else {
+          // Loading
+          return const Center(child: CircularProgressIndicator(strokeWidth: 4));
+        }
+      },
+    );
   }
 }
