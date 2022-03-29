@@ -14,12 +14,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final internosService = Provider.of<InternosService>(context);
-
+    final authService = Provider.of<AuthService>(context);
     if (internosService.isLoading) return const LoadingScreen();
 
     return Scaffold(
         appBar: AppBar(
           title: const Text('Internos'),
+          leading: IconButton(
+              onPressed: (() {
+                authService.logout();
+                Navigator.pushReplacementNamed(context, 'login');
+              }),
+              icon: const Icon(Icons.logout_outlined)),
           actions: [
             IconButton(
                 onPressed: () {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:penitenciario/services/services.dart';
 import '../providers/providers.dart';
 import '../ui/input_decorations.dart';
 import '../widgets/widgets.dart';
@@ -106,17 +107,18 @@ class _LoginForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
-
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
                       if (!loginForm.isValidForm()) return;
 
                       loginForm.isLoading = true;
 
-                      final String? errorMessage = await authService.login(
+                      final String? errorMessage = await authService.createUser(
                           loginForm.email, loginForm.password);
                       if (errorMessage == null) {
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
-                        NotificationsService.showSnackbar(errorMessage);
+                        NotificationService.showSnackbar(errorMessage);
                         loginForm.isLoading = false;
                       }
                     })

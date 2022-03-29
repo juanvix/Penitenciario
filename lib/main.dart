@@ -12,7 +12,10 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => InternosService())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => InternosService()),
+        ChangeNotifierProvider(create: (_) => AuthService())
+      ],
       child: const MyApp(),
     );
   }
@@ -32,6 +35,7 @@ class MyApp extends StatelessWidget {
         'home': (context) => HomeScreen(),
         'internos': (context) => const InternosScreen(),
         'register': (context) => const RegisterScreen(),
+        'check': (context) => const CheckScreen()
       },
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey[300],

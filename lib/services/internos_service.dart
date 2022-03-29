@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/interno.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,6 +14,7 @@ class InternosService extends ChangeNotifier {
       'penitenciario-8005d-default-rtdb.europe-west1.firebasedatabase.app';
   final List<Interno> internos = [];
   late Interno selectedInterno;
+  final storage = new FlutterSecureStorage();
 
   File? newPictureFile;
   final _dio = new Dio();
@@ -40,7 +42,8 @@ class InternosService extends ChangeNotifier {
     this.isLoading = true;
     notifyListeners();
 
-    final url = Uri.https(_baseUrl, '/interno.json');
+    final url = Uri.https(_baseUrl, '/interno.json',
+        {'auth': await storage.read(key: 'token') ?? ''});
     final resp = await http.get(url);
 
     final Map<String, dynamic> internosMap = json.decode(resp.body);
@@ -74,7 +77,8 @@ class InternosService extends ChangeNotifier {
   }
 
   Future<String> updateInterno(Interno interno) async {
-    final url = Uri.https(_baseUrl, '/interno/${interno.niss}.json');
+    final url = Uri.https(_baseUrl, '/interno/${interno.niss}.json',
+        {'auth': await storage.read(key: 'token') ?? ''});
     final resp = await http.put(url, body: interno.toJson());
     final decodedData = resp.body;
 
@@ -86,7 +90,8 @@ class InternosService extends ChangeNotifier {
   }
 
   Future<String> createInterno(Interno interno) async {
-    final url = Uri.https(_baseUrl, '/interno.json');
+    final url = Uri.https(_baseUrl, '/interno.json',
+        {'auth': await storage.read(key: 'token') ?? ''});
     final resp = await http.post(url, body: interno.toJson());
     //final decodedData = json.decode(resp.body);
 
