@@ -21,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
               child: Column(
             children: [
               const SizedBox(height: 10),
-              Text('Login', style: Theme.of(context).textTheme.headline4),
+              Text('Register', style: Theme.of(context).textTheme.headline4),
               const SizedBox(height: 30),
               ChangeNotifierProvider(
                   create: (_) => LoginFormProvider(), child: _LoginForm())
@@ -118,7 +118,6 @@ class _LoginForm extends StatelessWidget {
                       if (errorMessage == null) {
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
-                        NotificationService.showSnackbar(errorMessage);
                         loginForm.isLoading = false;
                       }
                     })

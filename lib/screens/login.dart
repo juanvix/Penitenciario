@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                   overlayColor:
                       MaterialStateProperty.all(Colors.green.withOpacity(0.1)),
                   shape: MaterialStateProperty.all(StadiumBorder())),
-              child: Text(
+              child: const Text(
                 'Crear una nueva cuenta',
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               )),
@@ -44,6 +44,23 @@ class LoginScreen extends StatelessWidget {
       ),
     )));
   }
+}
+
+void mostrarAlerta(BuildContext context, String mensaje) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Información incorrecta'),
+          content: Text(mensaje),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        );
+      });
 }
 
 class _LoginForm extends StatelessWidget {
@@ -80,7 +97,7 @@ class _LoginForm extends StatelessWidget {
             obscureText: true,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
-                hintText: '*****',
+                hintText: '******',
                 labelText: 'Contraseña del usuario',
                 prefixIcon: Icons.lock_outline),
             onChanged: (value) => loginForm.password = value,
@@ -111,8 +128,12 @@ class _LoginForm extends StatelessWidget {
                       final authService =
                           Provider.of<AuthService>(context, listen: false);
 
-                      if (!loginForm.isValidForm()) return;
-
+                      if (!loginForm.isValidForm()) {
+                        // NotificationService.showSnackbar("Usuario o contraseña incorrectos");
+                        mostrarAlerta(
+                            context, "Usuario o contraseña incorrectos");
+                        return;
+                      }
                       loginForm.isLoading = true;
 
                       final String? errorMessage = await authService.login(
@@ -120,7 +141,9 @@ class _LoginForm extends StatelessWidget {
                       if (errorMessage == null) {
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
-                        NotificationService.showSnackbar(errorMessage);
+                        //NotificationService.showSnackbar("Usuario o contraseña incorrectos");
+                        mostrarAlerta(
+                            context, "Usuario o contraseña incorrectos");
                         loginForm.isLoading = false;
                       }
                     })

@@ -41,7 +41,7 @@ class AuthService extends ChangeNotifier {
     };
 
     final url = Uri.https(
-        _baseUrl, '/accounts:signInWithPassword', {'key': _firebaseToken});
+        _baseUrl, '/v1/accounts:signInWithPassword', {'key': _firebaseToken});
 
     final resp = await http.post(url, body: json.encode(authData));
     final Map<String, dynamic> decodedResp = json.decode(resp.body);

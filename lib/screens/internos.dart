@@ -168,6 +168,7 @@ class _InternoForm extends StatelessWidget {
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'Observaciones del interno',
                     labelText: 'Observaciones:'),
+                maxLines: 5,
               ),
               const SizedBox(height: 30)
             ],
