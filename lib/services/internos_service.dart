@@ -6,8 +6,9 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../models/interno.dart';
 import 'package:http/http.dart' as http;
+
+import '../models/interno.dart';
 
 class InternosService extends ChangeNotifier {
   final String _baseUrl =

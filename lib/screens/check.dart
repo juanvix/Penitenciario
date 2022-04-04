@@ -24,8 +24,8 @@ class CheckScreen extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => LoginScreen(),
-                      transitionDuration: Duration(seconds: 0)));
+                      pageBuilder: (_, __, ___) => const LoginScreen(),
+                      transitionDuration: const Duration(seconds: 0)));
             });
           } else {
             Future.microtask(() {
@@ -33,7 +33,7 @@ class CheckScreen extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                       pageBuilder: (_, __, ___) => HomeScreen(),
-                      transitionDuration: Duration(seconds: 0)));
+                      transitionDuration: const Duration(seconds: 0)));
             });
           }
           return (Container());

@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
               style: ButtonStyle(
                   overlayColor:
                       MaterialStateProperty.all(Colors.green.withOpacity(0.1)),
-                  shape: MaterialStateProperty.all(StadiumBorder())),
+                  shape: MaterialStateProperty.all(const StadiumBorder())),
               child: const Text(
                 'Crear una nueva cuenta',
                 style: TextStyle(fontSize: 18, color: Colors.black87),
@@ -46,16 +46,16 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-void mostrarAlerta(BuildContext context, String mensaje) {
+void showAlert(BuildContext context, String message) {
   showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Información incorrecta'),
-          content: Text(mensaje),
+          title: const Text('Información incorrecta'),
+          content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Text('Ok'),
+              child: const Text('Ok'),
               onPressed: () => Navigator.of(context).pop(),
             )
           ],
@@ -130,8 +130,7 @@ class _LoginForm extends StatelessWidget {
 
                       if (!loginForm.isValidForm()) {
                         // NotificationService.showSnackbar("Usuario o contraseña incorrectos");
-                        mostrarAlerta(
-                            context, "Usuario o contraseña incorrectos");
+                        showAlert(context, "Usuario o contraseña incorrectos");
                         return;
                       }
                       loginForm.isLoading = true;
@@ -142,8 +141,7 @@ class _LoginForm extends StatelessWidget {
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
                         //NotificationService.showSnackbar("Usuario o contraseña incorrectos");
-                        mostrarAlerta(
-                            context, "Usuario o contraseña incorrectos");
+                        showAlert(context, "Usuario o contraseña incorrectos");
                         loginForm.isLoading = false;
                       }
                     })

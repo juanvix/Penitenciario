@@ -33,8 +33,8 @@ class RegisterScreen extends StatelessWidget {
               style: ButtonStyle(
                   overlayColor:
                       MaterialStateProperty.all(Colors.green.withOpacity(0.1)),
-                  shape: MaterialStateProperty.all(StadiumBorder())),
-              child: Text(
+                  shape: MaterialStateProperty.all(const StadiumBorder())),
+              child: const Text(
                 'Acceder con usuario y contraseña',
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               )),
